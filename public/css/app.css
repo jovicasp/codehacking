@@ -11286,3 +11286,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.navbar-header {
+  margin-right: 2400px;
+}
+
+#mainnavbar {
+  margin-top: 1380px;
+}
