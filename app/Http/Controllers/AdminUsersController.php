@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersCreateRequest;
+use App\Models\Photo;
 use App\Models\Role;
 use App\Models\User;
 use DateTime;
@@ -46,21 +47,17 @@ class AdminUsersController extends Controller
     {
         $input = $request->all();
 
-        $now = new DateTime();
-        $created_on = $now->format('u');
-
-        if ($file = $request->file('file')) {
-            $name = $created_on . '-' . $file->getClientOriginalName();
+        if ($file = $request->file('photo_id')) {
+            $name = time() . '-' . $file->getClientOriginalName();
             $file->move('images', $name);
-            $input['path'] = $name;
+
+            $photo = Photo::create(['path'=>$name]);
+            $input['photo_id'] = $photo->id;
         }
-        $password = bcrypt($input['password']);
-        $input['password'] = $password;
+        $input['password'] = bcrypt($request->password);//***
 
         User::create($input);
-        $users = User::all();
-
-        return view('admin.users.index', compact('users'));
+        return redirect(route('users.index'));
     }
 
     /**

@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public $directory = '/images/';
+//    public $directory = '/images/';
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +25,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'is_active',
-        'path',
+        'photo_id',
     ];
 
     /**
@@ -52,9 +52,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Role');
     }
 
-//    ACCESSOR FOR ATTRIBUTE PATH
-    public function getPathAttribute($value)
+//    ACCESSOR FOR ATTRIBUTE PATH without PHOTO MODEL
+//    public function getPathAttribute($value)
+//    {
+//        return $this->directory . $value;
+//    }
+
+    public function photo()
     {
-        return $this->directory . $value;
+        return $this->belongsTo('App\Models\Photo');
     }
 }

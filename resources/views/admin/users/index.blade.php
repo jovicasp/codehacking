@@ -18,15 +18,14 @@
         <tbody>
         @if($users)
             @foreach($users as $user)
-                {{--{{$user}} {!! '</br>' !!}--}}
                 <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
-                    <td>
-                        <div class="image-continer">
-                            <img height="30" src="{{$user->path}}">
-                        </div>
-                    </td>
+                    <div class="image-continer">
+                        <td>
+                            <img height="50" src="{{$user->photo ? $user->photo->path : 'no user photo'}}">
+                        </td>
+                    </div>
                     <td>{{$user->email}}</td>
                     <td>{{$user->role->name}}</td>
                     <td>{{$user->is_active==1 ? 'Active' : 'Not Active'}}</td>
