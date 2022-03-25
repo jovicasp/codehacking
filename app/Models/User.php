@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $directory = '/images/';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'is_active',
+        'path',
     ];
 
     /**
@@ -44,7 +47,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo('App\Models\Role');
+    }
+
+//    ACCESSOR FOR ATTRIBUTE PATH
+    public function getPathAttribute($value)
+    {
+        return $this->directory . $value;
     }
 }

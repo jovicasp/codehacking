@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UsersCreateRequest;
 use App\Models\Role;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class AdminUsersController extends Controller
@@ -16,7 +17,7 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-       $users = User::all();
+        $users = User::all();
 //       dd($users->find(1)->role->name);
 //       dd($users);
         return view('admin.users.index', compact('users'));
@@ -38,19 +39,34 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UsersCreateRequest $request)
     {
+        $input = $request->all();
 
-        return $request->all();
+        $now = new DateTime();
+        $created_on = $now->format('u');
+
+        if ($file = $request->file('file')) {
+            $name = $created_on . '-' . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $input['path'] = $name;
+        }
+        $password = bcrypt($input['password']);
+        $input['password'] = $password;
+
+        User::create($input);
+        $users = User::all();
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +77,7 @@ class AdminUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +88,8 @@ class AdminUsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,7 +100,7 @@ class AdminUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
