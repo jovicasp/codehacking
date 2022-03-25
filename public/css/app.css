@@ -11287,9 +11287,13 @@ textarea.form-control-lg {
   }
 }
 .navbar-header {
-  margin-right: 2400px;
+  margin-right: 2000px;
 }
 
 #mainnavbar {
   margin-top: 1380px;
+}
+
+#admin-page {
+  padding-top: 0px;
 }
