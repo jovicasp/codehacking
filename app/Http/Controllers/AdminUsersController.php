@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersCreateRequest;
+use App\Http\Requests\UsersUpdateRequest;
 use App\Models\Photo;
 use App\Models\Role;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\DeclareDeclare;
 
 class AdminUsersController extends Controller
 {
@@ -45,16 +47,20 @@ class AdminUsersController extends Controller
      */
     public function store(UsersCreateRequest $request)
     {
-        $input = $request->all();
+        if (trim($request->password) == ''){	//trimuje ako se unesu spaceovi smatra sve za prazan string
+            $input = $request->except('password');
+        }else{
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);        }
 
+//      PROVERITI VRACANJE AKO EMAIL POSTOJI U DB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if ($file = $request->file('photo_id')) {
             $name = time() . '-' . $file->getClientOriginalName();
             $file->move('images', $name);
 
-            $photo = Photo::create(['path'=>$name]);
+            $photo = Photo::create(['path' => $name]);
             $input['photo_id'] = $photo->id;
         }
-        $input['password'] = bcrypt($request->password);//***
 
         User::create($input);
         return redirect(route('users.index'));
@@ -79,7 +85,10 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $user = User::findOrFail($id);
+        $roles = Role::pluck('name', 'id')->toArray();
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -88,10 +97,35 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(UsersUpdateRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+//        psw condition – mozemo ga staviti u posebnu metodu pa pozvati. Takodje ovo cemo ukljuciti i u store metodu, da trimuje,
+//        a tamo je validacija required, tj. psw mora da se unese-nikad nece biti prazan string.
+        if (trim($request->password) == '') {    //trimuje ako se unesu spaceovi smatra sve za prazan string
+            $input = $request->except('password');
+        } else {
+            $input = $request->all();
+            //ALTHOUGH PSW IS NOT REQUIRED DURING USER EDITING, IF IT IS INSERTED IN ORDER TO CHANGE
+            //WE NEED TO VALIDATE IT HERE NOW!!!
+            $this->validate($request, [
+                'password' => 'min:5'
+            ]);
+            $input['password'] = bcrypt($request->password);
+        }
+
+        if ($file = $request->file('photo_id')) {
+            $name = time() . "-" . $file->getClientOriginalName();
+            $file->move('images', $name);
+
+            $photo = Photo::create(['path' => $name]);
+            $input['photo_id'] = $photo->id;
+        }
+        $user->update($input);
+
+        return redirect(route('users.index'));
     }
 
     /**
