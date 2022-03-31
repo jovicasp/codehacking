@@ -23,13 +23,32 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+{{-----------------------------------------------HEAD FROM APP-------------------------------------------}}
+{{--<meta charset="utf-8">--}}
+{{--<meta name="viewport" content="width=device-width, initial-scale=1">--}}
 
+<!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+{{--<title>{{ config('app.name', 'Laravel') }}</title>--}}
+
+<!-- Scripts -->
+{{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+
+<!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-----------------------------------------------END HEAD FROM APP-------------------------------------------}}
 
 
 
 </head>
 
 <body id="admin-page">
+
 
 <div id="wrapper">
 
@@ -47,67 +66,100 @@
         <!-- /.navbar-header -->
 
 
+    {{---------------------NAVBAR ZA PROFIL I LOGOVANJE USERA OD LAYOUT/ADMIN-------------}}
+    {{--<ul class="nav navbar-top-links navbar-right">--}}
 
-        <ul class="nav navbar-top-links navbar-right">
+
+    {{--<!-- /.dropdown -->--}}
+    {{--<li class="dropdown">--}}
+    {{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}}
+    {{--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>--}}
+    {{--</a>--}}
+    {{--<ul class="dropdown-menu dropdown-user">--}}
+    {{--<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>--}}
+    {{--</li>--}}
+    {{--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>--}}
+    {{--</li>--}}
+    {{--<li class="divider"></li>--}}
+    {{--<li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>--}}
+    {{--</li>--}}
+    {{--</ul>--}}
+    {{--<!-- /.dropdown-user -->--}}
+    {{--</li>--}}
+    {{--<!-- /.dropdown -->--}}
 
 
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+    {{--</ul>--}}
+
+    {{------------------ZA POJAVU IMENA ULOGOVANOG USERA!!!----------}}
+
+    {{--<ul class="nav navbar-nav navbar-right">--}}
+    {{--@if(auth()->guest())--}}
+    {{--@if(!Request::is('auth/login'))--}}
+    {{--<li><a href="{{ url('/auth/login') }}">Login</a></li>--}}
+    {{--@endif--}}
+    {{--@if(!Request::is('auth/register'))--}}
+    {{--<li><a href="{{ url('/auth/register') }}">Register</a></li>--}}
+    {{--@endif--}}
+    {{--@else--}}
+    {{--<li class="dropdown">--}}
+    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>--}}
+    {{--<ul class="dropdown-menu" role="menu">--}}
+    {{--<li><a href="{{ url('/auth/logout') }}">Logout</a></li>--}}
+
+    {{--<li><a href="{{ url('/admin/profile') }}/{{auth()->user()->id}}">Profile</a></li>--}}
+    {{--</ul>--}}
+    {{--</li>--}}
+    {{--@endif--}}
+    {{--</ul>--}}
+    {{---------------------------------------------------------------------------------------------}}
+    <!-- Right Side Of Navbar -->
+        <ul class="navbar-nav ms-auto">
+            <!-- Authentication Links -->
+            @guest
+                @if (Route::has('login'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
+                @endif
 
+                @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                @endif
+            @else
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="text-decoration: none;color:blue;font-size:12px;">
+                        <i class="fa fa-user fa-fw"></i>
+                        <i class="fa fa-caret-down"></i>
+                        <strong>{{ Auth::user()->name }}</strong>
+                    </a>
 
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           style="text-decoration: none;color:blue;font-size:12px;"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            <strong>{{ __('Logout') }}</strong>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            @endguest
         </ul>
 
-
-
-
-
-
-        {{--<ul class="nav navbar-nav navbar-right">--}}
-        {{--@if(auth()->guest())--}}
-        {{--@if(!Request::is('auth/login'))--}}
-        {{--<li><a href="{{ url('/auth/login') }}">Login</a></li>--}}
-        {{--@endif--}}
-        {{--@if(!Request::is('auth/register'))--}}
-        {{--<li><a href="{{ url('/auth/register') }}">Register</a></li>--}}
-        {{--@endif--}}
-        {{--@else--}}
-        {{--<li class="dropdown">--}}
-        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>--}}
-        {{--<ul class="dropdown-menu" role="menu">--}}
-        {{--<li><a href="{{ url('/auth/logout') }}">Logout</a></li>--}}
-
-        {{--<li><a href="{{ url('/admin/profile') }}/{{auth()->user()->id}}">Profile</a></li>--}}
-        {{--</ul>--}}
-        {{--</li>--}}
-        {{--@endif--}}
-        {{--</ul>--}}
-
-
-
-
-
+        {{---------------------------------------------------------------------------------------------}}
         <div class="navbar-default sidebar" id="mainnavbar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
+                            <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -125,9 +177,11 @@
                             <li>
                                 <a href="{{route('users.index')}}">All Users</a>
                             </li>
-
                             <li>
                                 <a href="{{route('users.create')}}">Create User</a>
+                            </li>
+                            <li>
+                                {{--<a href="{{route('users.edit', )}}">Edit User</a>--}}
                             </li>
 
                         </ul>
@@ -138,11 +192,11 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/posts">All Posts</a>
+                                {{--<a href="{{route('posts.index')}}">All Posts</a>--}}
                             </li>
 
                             <li>
-                                <a href="/posts/create">Create Post</a>
+                                {{--<a href="{{route('posts.create')}}">Create Post</a>--}}
                             </li>
 
                         </ul>
@@ -284,40 +338,30 @@
 
 
 
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="/profile"><i class="fa fa-dashboard fa-fw"></i>Profile</a>
-                </li>
+    {{--<div class="navbar-default sidebar" role="navigation">--}}
+    {{--<div class="sidebar-nav navbar-collapse">--}}
+    {{--<ul class="nav" id="side-menu">--}}
+    {{--<li>--}}
+    {{--<a href="/profile"><i class="fa fa-dashboard fa-fw"></i>Profile</a>--}}
+    {{--</li>--}}
 
+    {{--<li>--}}
+    {{--<a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>--}}
+    {{--<ul class="nav nav-second-level">--}}
+    {{--<li>--}}
+    {{--<a href="">All Posts</a>--}}
+    {{--</li>--}}
 
+    {{--<li>--}}
+    {{--<a href="">Create Post</a>--}}
+    {{--</li>--}}
 
-
-                <li>
-                    <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="">All Posts</a>
-                        </li>
-
-                        <li>
-                            <a href="">Create Post</a>
-                        </li>
-
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-
-
-
-
-
-            </ul>
-
-        </div>
-
-    </div>
+    {{--</ul>--}}
+    {{--<!-- /.nav-second-level -->--}}
+    {{--</li>--}}
+    {{--</ul>--}}
+    {{--</div>--}}
+    {{--</div>--}}
 
 </div>
 
@@ -348,7 +392,7 @@
 
 <!-- jQuery -->
 <script src="{{asset('js/libs.js')}}"></script>
-
+<script src="{{asset('js/app.js')}}" defer></script>
 
 @yield('footer')
 

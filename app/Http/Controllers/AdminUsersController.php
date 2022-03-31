@@ -136,6 +136,8 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user=User::whereId($id)->delete();
+        return redirect(route('users.index'));
+
     }
 }

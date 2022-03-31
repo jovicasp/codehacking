@@ -44,8 +44,18 @@
         {!! '</br>' !!}{!! '</br>' !!}
         <div class="form-group">
             {!! Form::submit('Update User',['class'=>'btn btn-primary']) !!}
+            {!! Form::close() !!}
+            {{--//svaka forma se zatvara zasebno--}}
+            {!! '</br>' !!}
+
+            {{--//DELETE FORM--}}
+            {!! Form::open(['method'=>'DELETE',
+            'action'=>['App\Http\Controllers\AdminUsersController@destroy', $user->id]]) !!}
+            {!! Form::submit('Delete this User',
+                ['class'=>'btn btn-danger', 'style'=>'float: right; margin-top: -20px;']) !!}
+            {!! Form::close() !!}
+            {{--//svaka forma se zatvara zasebno--}}
         </div>
-        {!! Form::close() !!} {!! '</br>' !!}
         @include('includes.display-form-errors')
         {{--//greske cemo ukljuciti ili ovako u samom divu sa slikom i formom ili u zasebnom divu class =row ako je van ovog diva,a divove sa slikom i formom ubaciti u zaseban div class=row.--}}
     </div>

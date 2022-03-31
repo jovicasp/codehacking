@@ -14,6 +14,7 @@
             <th>Status</th>
             <th>Created</th>
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -35,11 +36,18 @@
                     $parameters=[$user->id, '<i class="fa fa-building"></i> Button'],
                     ['type'=>'button', 'class'=>'btn btn-primary']) !!}
                     </td>
+                    <div class="form-group">
+                        <td>
+                            {!! Form::open(['method'=>'DELETE','action'=>['App\Http\Controllers\AdminUsersController@destroy', $user->id]]) !!}
+                            {!! Form::submit('Delete this User',
+                            ['class'=>'btn btn-danger']) !!}
+                            {{--['class'=>'btn btn-danger', 'style'=>'float: right;margin-top: -40px;']) !!}--}}
+                            {!! Form::close() !!}
+                        </td>
+                    </div>
                 </tr>
             @endforeach
         @endif
         </tbody>
     </table>
 @stop
-
-div.
