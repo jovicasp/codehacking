@@ -1,7 +1,29 @@
 @extends('layouts.admin')
 
 @section('content')
+    @if(session('deleted_user'))
+        <div class="alert alert-warning " role="alert">
+            <h4>{{ session('deleted_user') }}</h4>
+        </div>
+    @endif
     <h1>Users</h1>
+    {{--BUTTON FOR RANDOM USER CREATION--}}
+    <a href="{{ url('/cru') }}">
+        <button class="btn btn-success" style="margin-left: 500px; margin-top: -40px; padding: 10px;font-size:12px">
+            {{ "Create random user" }}
+        </button>
+    </a>
+
+    @if(session('updated_user'))
+        <div class="alert alert-success  " role="alert">
+            <h4>{{ session('updated_user') }}</h4>
+        </div>
+    @endif
+    @if(session('created_user'))
+        <div class="alert alert-success  " role="alert">
+            <h4>{{ session('created_user') }}</h4>
+        </div>
+    @endif
 
     <table class="table table-hover">
         <thead>

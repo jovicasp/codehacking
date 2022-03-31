@@ -30,4 +30,6 @@ Route::get('/admin', function(){
 Route::group(['middleware'=>'admin'], function (){
     Route::resource('admin/users', AdminUsersController::class);
 });
+/// ROUTE FOR RANDOM USER CREATION////////////////////
+Route::get('/cru', [AdminUsersController::class, 'create_random_user']);
 

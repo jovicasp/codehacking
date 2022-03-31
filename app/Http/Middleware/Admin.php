@@ -23,8 +23,12 @@ class Admin
                 return $next($request);
             }
             Session::flash('not_authorized', 'You are NOT authorized to view the page You intended to!');
-//            return redirect('/home');
-            return  redirect(404);
+            return redirect('/admin');      //BACK TO ADMIN DASHBOARD-admin.index page
+//        return redirect('/home');         //BACK TO HOME PAGE
+//        return redirect(404);             //GET 4040 ERROR PAGE
+
+
+
         }
 
 
