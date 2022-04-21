@@ -25,7 +25,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'is_active',
-        'photo_id',
+//        'photo_id',
     ];
 
     /**
@@ -58,9 +58,18 @@ class User extends Authenticatable
 //        return $this->directory . $value;
 //    }
 
-    public function photo()
+//    public function photo()
+//    {
+//        return $this->belongsTo('App\Models\Photo');
+//    }
+
+    public function photos()
     {
-        return $this->belongsTo('App\Models\Photo');
+        return $this->morphMany('App\Models\Photo', 'imageable');
+    }
+
+    public function posts(){
+        return $this->hasMany('App\Models\Post');
     }
 
     public function isAdmin(){

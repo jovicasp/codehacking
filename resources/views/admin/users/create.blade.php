@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create User</h1>
-
+    <div class="row">
     {!! Form::open(['method'=>"POST", 'action'=>"App\Http\Controllers\AdminUsersController@store", 'files'=>true]) !!}
     <div class="form-group">
         {!! Form::label('name', 'Name') !!}
@@ -32,19 +32,17 @@
     </div>
     {!! '</br>' !!}
     <div class="form-group">
-        {!! Form::label('photo_id','Upload picture') !!}
-        {!! Form::file('photo_id', null, ['class'=>'form-control']) !!}
+        {!! Form::label('photo','Upload picture') !!}
+        {!! Form::file('photo', null, ['class'=>'form-control']) !!}
     </div>
     {!! '</br>' !!}{!! '</br>' !!}
     <div class="form-group">
         {!! Form::submit('Create User',['class'=>'btn btn-primary']) !!}
     </div>
-
-
-
-
-
     {!! Form::close() !!}
 {!! '</br>' !!}
+    </div>
+    <div class="row">
    @include('includes.display-form-errors')
+    </div>
 @stop

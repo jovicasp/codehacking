@@ -2,7 +2,8 @@
 @section('content')
     <h1>Edit User</h1>
     <div class="col-sm-3">
-        <img src="{{$user->photo ? $user->photo->path : 'https://via.placeholder.com/400x400'}}" alt="" class="img-responsive img-rounded">
+        <img src="{{$user->photos->first() ? ($user->photos->first())['path'] : 'https://via.placeholder.com/300x300'}}" alt="" lass="img-responsive img-rounded">
+
     </div>
     <div class="col-sm-9">
         {{--//MODEL BINDOVANA FORMA, UKLJUCUJE PROMENLJIVU $USER KAO PRVI PARAMETAR, METHOD JE PUT, ACTION JE METHOD UPDATE I PARAMETAR ID U NIZU, ENCTYPE FILES-TRUE ZBOG FILEFOERMFIELD.--}}
@@ -34,10 +35,10 @@
         </div>
         {!! '</br>' !!}
         <div class="form-group">
-            {!! Form::label('photo_id', 'Photo') !!}
-            {!! Form::file('photo_id', null, ['class'=>'form-control']) !!}
+            {!! Form::label('photo', 'Upload Photo') !!}
+            {!! Form::file('photo', null, ['class'=>'form-control']) !!}
             <div class="image-container" style="margin: -30px 0px 0px 310px;">
-                <td><img height="40" src="{{$user->photo ? $user->photo->path : 'no photo file'}}"></td>
+                <td><img height="40" src="{{$user->photos->first() ? ($user->photos->first())['path'] : 'https://via.placeholder.com/200x200'}}"></td>
                 {{--//dodatni PRIKAZ SLIKE--}}
             </div>
         </div>

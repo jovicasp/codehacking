@@ -47,7 +47,8 @@
                     <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
                     <div class="image-continer">
                         <td>
-                        <img height="40" src="{{$user->photo ? $user->photo->path : 'https://via.placeholder.com/400x400'}}">
+                            {{--UZIMANJE SAMO PRVE SLIKE OD USERA koji je u PM RELACIJI SA PHOTO--}}
+                        <img height="40" src="{{$user->photos->first() ? ($user->photos->first())['path'] : 'https://via.placeholder.com/400x400'}}">
                         </td>
                     </div>
                     <td>{{$user->email}}</td>

@@ -8,14 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     use HasFactory;
-    protected  $fillable = ['path'];
+    protected  $fillable = ['path', 'imageable_id', 'imageable_type'];
 
     public $directory = "/images/";
+
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
+
 
     public function getPathAttribute($value)
     {
         return $this->directory . $value;
     }
+
+
 
 
 
