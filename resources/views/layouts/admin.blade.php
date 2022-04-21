@@ -44,7 +44,6 @@
     {{-----------------------------------------------END HEAD FROM APP-------------------------------------------}}
 
 
-
 </head>
 
 <body id="admin-page">
@@ -130,7 +129,9 @@
                 @endif
             @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="text-decoration: none;color:blue;font-size:12px;">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                       style="text-decoration: none;color:blue;font-size:12px;">
                         <i class="fa fa-user fa-fw"></i>
                         <i class="fa fa-caret-down"></i>
                         <strong>{{ Auth::user()->name }}</strong>
@@ -205,18 +206,19 @@
 
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i>Categories<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="/categories">All Categories</a>
-                            </li>
+                        <a href="{{route('categories.index')}}"><i class="fa fa-wrench fa-fw"></i>Categories<span class="fa arrow"></span></a>
+                        {{--</a>--}}
+                    {{--<ul class="nav nav-second-level">--}}
+                    {{--<li>--}}
+                    {{--<a href="/categories">All Categories</a>--}}
+                    {{--</li>--}}
 
-                            <li>
-                                <a href="/categories/create">Create Category</a>
-                            </li>
+                    {{--<li>--}}
+                    {{--<a href="/categories/create">Create Category</a>--}}
+                    {{--</li>--}}
 
-                        </ul>
-                        <!-- /.nav-second-level -->
+                    {{--</ul>--}}
+                    <!-- /.nav-second-level -->
                     </li>
 
 
@@ -234,11 +236,6 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-
-
-
-
-
 
 
                     <li>
@@ -284,7 +281,8 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
+                                    class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="#">Second Level Item</a>
@@ -335,9 +333,6 @@
     </nav>
 
 
-
-
-
     {{--<div class="navbar-default sidebar" role="navigation">--}}
     {{--<div class="sidebar-nav navbar-collapse">--}}
     {{--<ul class="nav" id="side-menu">--}}
@@ -366,10 +361,6 @@
 </div>
 
 
-
-
-
-
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -395,9 +386,6 @@
 <script src="{{asset('js/app.js')}}" defer></script>
 
 @yield('footer')
-
-
-
 
 
 </body>
